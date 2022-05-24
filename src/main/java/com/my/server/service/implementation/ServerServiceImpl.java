@@ -1,5 +1,7 @@
 package com.my.server.service.implementation;
 
+import static org.springframework.data.domain.PageRequest.of;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Collection;
@@ -13,11 +15,11 @@ import com.my.server.service.ServerService;
 
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
+
 
 @Service
 @Transactional
-@Slf4j
+
 public class ServerServiceImpl implements ServerService {
 
     private final ServerRepo serverRepo;
@@ -36,20 +38,20 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public Collection<Server> list(int limit) {
-        // TODO Auto-generated method stub
-        return null;
+        System.out.println("Fetching all server");
+        return serverRepo.findAll(of(0, limit)).toList();
     }
 
     @Override
     public Server get(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        System.out.println("Fetching server by id: {}" + id);
+        return serverRepo.findById(id).get();
     }
 
     @Override
-    public Server date(Server server) {
-        // TODO Auto-generated method stub
-        return null;
+    public Server update(Server server) {
+        System.out.println("updating server: {} " + server.getName());
+        return serverRepo.save(server);
     }
 
     @Override
